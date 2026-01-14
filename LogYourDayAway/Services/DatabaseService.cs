@@ -8,7 +8,9 @@ namespace LogYourDayAway.Services
 
         public DatabaseService()
         {
-            _database = new SQLiteAsyncConnection(DbSettings.DatabaseFilename, DbSettings.Flags);
+            //_database = new SQLiteAsyncConnection(DbSettings.DatabaseFilename, DbSettings.Flags);
+
+            _database = DbSettings.OpenDatabase();
         }
 
         async Task Init()

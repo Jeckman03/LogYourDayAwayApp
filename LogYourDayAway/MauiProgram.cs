@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using LogYourDayAway.Models;
+using LogYourDayAway.Services;
+using LogYourDayAway.ViewModel;
+using Microsoft.Extensions.Logging;
 
 namespace LogYourDayAway
 {
@@ -15,7 +18,9 @@ namespace LogYourDayAway
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-
+            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<MainViewModel>();
+            builder.Services.AddSingleton<IDatabase<DayEntryModel>, DatabaseService<DayEntryModel>>();
 
 #if DEBUG
             builder.Logging.AddDebug();

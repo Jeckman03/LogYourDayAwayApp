@@ -4,11 +4,11 @@
     {
         public DateTime EntryDate { get; set; }
         public string EntryText { get; set; }
-        public DayRank DayRank { get; set; }
+        public DayRank DayRank { get; set; } = DayRank.Great;
     }
 
     public enum DayRank
     {
-        Great, Good, AboveAverage, Average, BelowAverage, Bad, Awful
+        Great, Good, Average, Bad, Awful
     }
 }

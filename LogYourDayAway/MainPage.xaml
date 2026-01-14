@@ -1,36 +1,104 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="LogYourDayAway.MainPage">
+             x:Class="LogYourDayAway.MainPage"
+             xmlns:local="clr-namespace:LogYourDayAway.ViewModel"
+             xmlns:models="clr-namespace:LogYourDayAway.Models"
+             x:DataType="local:MainViewModel">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a hovercraft number nine" />
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
 
-            <Label
-                Text="Hello, Poop!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
+        <Label Grid.Row="0"
+            Text="Log Your Day Away"
+            Style="{StaticResource Headline}"
+            SemanticProperties.HeadingLevel="Level1" />
 
-            <Label
-                Text="Welcome to &#10;.NET Multi-platform App UI"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+        <DatePicker Grid.Row="1"
+                    HorizontalOptions="Center"
+                    BackgroundColor="Transparent"
+                    Date="{Binding SelectedDate}"
+                    FontSize="Large"
+                    FontAttributes="Bold"
+                    Format="MM/dd/yy"/>
 
-            <Button
+        <CollectionView Grid.Row="2"
+            ItemsSource="{Binding Entries}">
+            <CollectionView.GestureRecognizers>
+                <SwipeGestureRecognizer
+                    Direction="Left"
+                    Command="{Binding NextDayCommand}" />
+
+                <SwipeGestureRecognizer
+                    Direction="Right"
+                    Command="{Binding PreviousDayCommand}" />
+            </CollectionView.GestureRecognizers>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:DayEntryModel">
+                    <Border Stroke="{Binding StatusColor}"
+                            Padding="5"
+                            Margin="0,5,0,0"
+                            StrokeThickness="2">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10"/>
+                        </Border.StrokeShape>
+
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border"
+                                         Binding="{Binding DayRank}"
+                                         Value="{x:Static models:DayRank.Great}">
+                                <Setter Property="Stroke" Value="Green" />
+                            </DataTrigger>
+
+                            <DataTrigger TargetType="Border"
+                                         Binding="{Binding DayRank}"
+                                         Value="{x:Static models:DayRank.Good}">
+                                <Setter Property="Stroke" Value="LightGreen" />
+                            </DataTrigger>
+
+                            <DataTrigger TargetType="Border"
+                                         Binding="{Binding DayRank}"
+                                         Value="{x:Static models:DayRank.Average}">
+                                <Setter Property="Stroke" Value="DarkGoldenrod" />
+                            </DataTrigger>
+                            
+                            <DataTrigger TargetType="Border"
+                                         Binding="{Binding DayRank}"
+                                         Value="{x:Static models:DayRank.Bad}">
+                                <Setter Property="Stroke" Value="Red" />
+                            </DataTrigger>
+
+                            <DataTrigger TargetType="Border"
+                                         Binding="{Binding DayRank}"
+                                         Value="{x:Static models:DayRank.Awful}">
+                                <Setter Property="Stroke" Value="Black" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                        
+                        <Grid ColumnDefinitions="*" Padding="10">
+                            <Label LineBreakMode="WordWrap">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding EntryDate, StringFormat='{0:yyyy}'}" FontAttributes="Bold"/>
+                                        <Span Text=" - "/>
+                                        <Span Text="{Binding EntryText}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </Grid>
+                    </Border>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Grid.Row="3"
                 x:Name="CounterBtn"
-                Text="Click me" 
+                Text="Log Day" 
                 SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Fill" />
-        </VerticalStackLayout>
-    </ScrollView>
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                WidthRequest="200"
+                Command="{Binding LogDayCommand}"/>
+    </Grid>
 
 </ContentPage>
