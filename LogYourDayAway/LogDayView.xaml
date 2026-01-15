@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:LogYourDayAway.ViewModel"
+             xmlns:model="clr-namespace:LogYourDayAway.Models"
+             x:Class="LogYourDayAway.LogDayView"
+             x:DataType="local:LogDayViewModel"
+             Title="Log A Day">
+    
+    
+    <VerticalStackLayout>
+        <Label 
+            Text="Write Something About Your Day"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <Border>
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+            <Editor x:Name="editor"
+                    Placeholder="Write shomething about your day!"
+                    HeightRequest="150"
+                    Margin="10"/>
+        </Border>
+
+        <Border>
+            <Picker Title="Quality of day"
+                    ItemsSource="{Binding DayRanks}"
+                    SelectedItem="{Binding SelectedRank}" />
+        </Border>
+    </VerticalStackLayout>
+</ContentPage>

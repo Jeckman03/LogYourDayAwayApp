@@ -18,9 +18,20 @@ namespace LogYourDayAway
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            // Views
             builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<LogDayView>();
+
+            // ViewModels
             builder.Services.AddTransient<MainViewModel>();
+            builder.Services.AddTransient<LogDayViewModel>();
+
+
+            // Services
+            builder.Services.AddTransient<DayEntryService>();
             builder.Services.AddSingleton<IDatabase<DayEntryModel>, DatabaseService<DayEntryModel>>();
+
+
 
 #if DEBUG
             builder.Logging.AddDebug();

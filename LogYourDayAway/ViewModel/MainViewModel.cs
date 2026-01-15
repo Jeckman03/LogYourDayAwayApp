@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using LogYourDayAway.Models;
 using LogYourDayAway.Services;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LogYourDayAway.ViewModel
 {
@@ -18,49 +19,52 @@ namespace LogYourDayAway.ViewModel
         private DateTime selectedDate = DateTime.Now;
 
         private readonly IDatabase<DayEntryModel> _database;
+        private readonly DayEntryService _dayEntryService;
 
-        public MainViewModel(IDatabase<DayEntryModel> database)
+        public MainViewModel(IDatabase<DayEntryModel> database, DayEntryService dayEntryService)
         {
             _database = database;
-
-            GetEntries();
+            _dayEntryService = dayEntryService;
+            LoadEntriesAsync();
         }
 
-        private async void GetEntries()
+        private async void LoadEntriesAsync()
         {
-            var allItems = await _database.GetItemsAsync();
-
-            var output = allItems.Where(x => x.EntryDate.Month == SelectedDate.Month && x.EntryDate.Day == SelectedDate.Day).ToList();
-
-            Entries = new ObservableCollection<DayEntryModel>(output);
+            var list = await _dayEntryService.GetEntryLogsByDay(SelectedDate);
+            Entries = new ObservableCollection<DayEntryModel>(list);
         }
 
         [RelayCommand]
         private void NextDay()
         {
             SelectedDate = SelectedDate.AddDays(1);
-            GetEntries();
+            LoadEntriesAsync();
         }
 
         [RelayCommand]
         private void PreviousDay()
         {
             SelectedDate = SelectedDate.AddDays(-1);
-            GetEntries();
+            LoadEntriesAsync();
         }
 
         [RelayCommand]
         private async void LogDay()
         {
-            string textEntry = await Shell.Current.DisplayPromptAsync("Log Day", "Enter your day", "OK", "Cancel");
-            if (!string.IsNullOrWhiteSpace(textEntry))
+            //string textEntry = await Shell.Current.DisplayPromptAsync("Log Day", "Enter your day", "OK", "Cancel");
+            //if (!string.IsNullOrWhiteSpace(textEntry))
+            //{
+            //    DayEntryModel newLog = new DayEntryModel { EntryDate = SelectedDate, EntryText = textEntry };
+            //    Entries.Add(newLog);
+
+            //    await _database.AddAsync(newLog);
+
+            //}
+
+            await Shell.Current.GoToAsync("LogDayView", true, new Dictionary<string, object>
             {
-                DayEntryModel newLog = new DayEntryModel { EntryDate = SelectedDate, EntryText = textEntry };
-                Entries.Add(newLog);
-
-                await _database.AddAsync(newLog);
-
-            }
+                { "SelectedDate", SelectedDate }
+            });
         }
     }
 }
