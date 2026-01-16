@@ -6,8 +6,8 @@ public partial class LogDayView : ContentPage
 {
 
     public LogDayView(LogDayViewModel logDayViewModel)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         BindingContext = logDayViewModel;
     }
 }

@@ -8,26 +8,43 @@
              Title="Log A Day">
     
     
-    <VerticalStackLayout>
-        <Label 
-            Text="Write Something About Your Day"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-
-        <Border>
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, *">
+        <Label Grid.Row="0"
+               Text="Write Something About Your Day"
+               VerticalOptions="Center" 
+               HorizontalOptions="Center"
+               FontSize="Large"
+               Margin="0,0,0,20"/>
+        <Border Grid.Row="1">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="10" />
             </Border.StrokeShape>
             <Editor x:Name="editor"
                     Placeholder="Write shomething about your day!"
-                    HeightRequest="150"
-                    Margin="10"/>
+                    Text="{Binding EntryText}"
+                    Margin="10"
+                    HeightRequest="200"/>
         </Border>
 
-        <Border>
+        <Label Grid.Row="2"
+               Text="Select Day Rank:" 
+               Margin="0,20,0,5"/>
+
+        <Border Grid.Row="3"
+                Padding="10">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+            
             <Picker Title="Quality of day"
                     ItemsSource="{Binding DayRanks}"
                     SelectedItem="{Binding SelectedRank}" />
         </Border>
-    </VerticalStackLayout>
+
+        <Button Grid.Row="4"
+                Text="Log Day"
+                VerticalOptions="End"
+                Command="{Binding SaveLogCommand}"/>
+        
+    </Grid>
 </ContentPage>

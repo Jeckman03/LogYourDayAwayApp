@@ -1,14 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using LogYourDayAway.Messages;
 using LogYourDayAway.Models;
 using LogYourDayAway.Services;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations.Schema;
+using LogYourDayAway.Messages;
 
 namespace LogYourDayAway.ViewModel
 {
     public partial class MainViewModel : ObservableObject
     {
+
         [ObservableProperty]
         private ObservableCollection<DayEntryModel> entries = new ObservableCollection<DayEntryModel>();
 
@@ -26,6 +29,11 @@ namespace LogYourDayAway.ViewModel
             _database = database;
             _dayEntryService = dayEntryService;
             LoadEntriesAsync();
+
+            WeakReferenceMessenger.Default.Register<LogSavedMessage>(this, (r, message) =>
+            {
+                LoadEntriesAsync();
+            });
         }
 
         private async void LoadEntriesAsync()

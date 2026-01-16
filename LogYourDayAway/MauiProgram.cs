@@ -1,4 +1,5 @@
-﻿using LogYourDayAway.Models;
+﻿using CommunityToolkit.Maui;
+using LogYourDayAway.Models;
 using LogYourDayAway.Services;
 using LogYourDayAway.ViewModel;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ namespace LogYourDayAway
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

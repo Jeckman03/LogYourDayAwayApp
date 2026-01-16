@@ -1,18 +1,61 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using LogYourDayAway.Messages;
 using LogYourDayAway.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using LogYourDayAway.Services;
+using System.Diagnostics;
 
 namespace LogYourDayAway.ViewModel
 {
+    [QueryProperty(nameof(SelectedDate), "SelectedDate")]
     public partial class LogDayViewModel : ObservableObject
     {
-        [ObservableProperty]
-        private string _selectedRank;
-
+        
+        private readonly IDatabase<DayEntryModel> _database;
         public List<DayRank> DayRanks { get; } = Enum.GetValues(typeof(DayRank)).Cast<DayRank>().ToList();
+
+        [ObservableProperty]
+        private DayRank _selectedRank;
+
+        [ObservableProperty]
+        private DateTime _selectedDate;
+
+        [ObservableProperty]
+        private string _entryText;
+
+        [ObservableProperty]
+        private DayRank _selectedDayRank;
+
+
+        public LogDayViewModel(IDatabase<DayEntryModel> database)
+        {
+            _database = database;
+        }
+
+
+
+        [RelayCommand]
+        private async Task SaveLog()
+        {
+            if (!string.IsNullOrWhiteSpace(EntryText))
+            {
+                DayEntryModel newLog = new DayEntryModel
+                {
+                    EntryDate = SelectedDate,
+                    EntryText = EntryText,
+                    DayRank = SelectedRank
+                };
+                await _database.AddAsync(newLog);
+
+                WeakReferenceMessenger.Default.Send(new LogSavedMessage());
+
+                await Shell.Current.GoToAsync("..");
+            }
+            else
+            {
+                Debug.WriteLine("Entry text is empty. Log not saved.");
+            }
+        }
     }
 }

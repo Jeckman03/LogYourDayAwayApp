@@ -21,75 +21,85 @@
                     FontAttributes="Bold"
                     Format="MM/dd/yy"/>
 
-        <CollectionView Grid.Row="2"
-            ItemsSource="{Binding Entries}">
-            <CollectionView.GestureRecognizers>
-                <SwipeGestureRecognizer
-                    Direction="Left"
-                    Command="{Binding NextDayCommand}" />
+        <Border Grid.Row="2"
+                Padding="5"
+                BackgroundColor="LightGray">
+            
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10"/>
+            </Border.StrokeShape>
 
-                <SwipeGestureRecognizer
-                    Direction="Right"
-                    Command="{Binding PreviousDayCommand}" />
-            </CollectionView.GestureRecognizers>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:DayEntryModel">
-                    <Border Stroke="{Binding StatusColor}"
-                            Padding="5"
-                            Margin="0,5,0,0"
-                            StrokeThickness="2">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="10"/>
-                        </Border.StrokeShape>
+            <CollectionView ItemsSource="{Binding Entries}"
+                            EmptyView="No current log entries for this date.">
+                <CollectionView.GestureRecognizers>
+                    <SwipeGestureRecognizer Direction="Left"
+                                            Command="{Binding NextDayCommand}" />
 
-                        <Border.Triggers>
-                            <DataTrigger TargetType="Border"
-                                         Binding="{Binding DayRank}"
-                                         Value="{x:Static models:DayRank.Great}">
-                                <Setter Property="Stroke" Value="Green" />
-                            </DataTrigger>
-
-                            <DataTrigger TargetType="Border"
-                                         Binding="{Binding DayRank}"
-                                         Value="{x:Static models:DayRank.Good}">
-                                <Setter Property="Stroke" Value="LightGreen" />
-                            </DataTrigger>
-
-                            <DataTrigger TargetType="Border"
-                                         Binding="{Binding DayRank}"
-                                         Value="{x:Static models:DayRank.Average}">
-                                <Setter Property="Stroke" Value="DarkGoldenrod" />
-                            </DataTrigger>
+                    <SwipeGestureRecognizer Direction="Right"
+                                            Command="{Binding PreviousDayCommand}" />
+                </CollectionView.GestureRecognizers>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:DayEntryModel">
+                        <Border Stroke="{Binding StatusColor}"
+                                Padding="5"
+                                Margin="0,5,0,0"
+                                StrokeThickness="4"
+                                BackgroundColor="White">
                             
-                            <DataTrigger TargetType="Border"
-                                         Binding="{Binding DayRank}"
-                                         Value="{x:Static models:DayRank.Bad}">
-                                <Setter Property="Stroke" Value="Red" />
-                            </DataTrigger>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
 
-                            <DataTrigger TargetType="Border"
-                                         Binding="{Binding DayRank}"
-                                         Value="{x:Static models:DayRank.Awful}">
-                                <Setter Property="Stroke" Value="Black" />
-                            </DataTrigger>
-                        </Border.Triggers>
-                        
-                        <Grid ColumnDefinitions="*" Padding="10">
-                            <Label LineBreakMode="WordWrap">
-                                <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding EntryDate, StringFormat='{0:yyyy}'}" FontAttributes="Bold"/>
-                                        <Span Text=" - "/>
-                                        <Span Text="{Binding EntryText}"/>
-                                    </FormattedString>
-                                </Label.FormattedText>
-                            </Label>
-                        </Grid>
-                    </Border>
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border"
+                                 Binding="{Binding DayRank}"
+                                 Value="{x:Static models:DayRank.Great}">
+                                    <Setter Property="Stroke" Value="Green" />
+                                </DataTrigger>
 
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                                <DataTrigger TargetType="Border"
+                                 Binding="{Binding DayRank}"
+                                 Value="{x:Static models:DayRank.Good}">
+                                    <Setter Property="Stroke" Value="LightGreen" />
+                                </DataTrigger>
+
+                                <DataTrigger TargetType="Border"
+                                 Binding="{Binding DayRank}"
+                                 Value="{x:Static models:DayRank.Average}">
+                                    <Setter Property="Stroke" Value="DarkGoldenrod" />
+                                </DataTrigger>
+
+                                <DataTrigger TargetType="Border"
+                                 Binding="{Binding DayRank}"
+                                 Value="{x:Static models:DayRank.Bad}">
+                                    <Setter Property="Stroke" Value="Red" />
+                                </DataTrigger>
+
+                                <DataTrigger TargetType="Border"
+                                 Binding="{Binding DayRank}"
+                                 Value="{x:Static models:DayRank.Awful}">
+                                    <Setter Property="Stroke" Value="Black" />
+                                </DataTrigger>
+                            </Border.Triggers>
+
+                            <Grid ColumnDefinitions="*" Padding="10">
+                                <Label LineBreakMode="WordWrap">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding EntryDate, StringFormat='{0:yyyy}'}" FontAttributes="Bold"/>
+                                            <Span Text=" - "/>
+                                            <Span Text="{Binding EntryText}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </Grid>
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+
 
         <Button Grid.Row="3"
                 x:Name="CounterBtn"
