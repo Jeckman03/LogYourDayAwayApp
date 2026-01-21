@@ -24,8 +24,8 @@ namespace LogYourDayAway.ViewModel
         [ObservableProperty]
         private string _entryText;
 
-        [ObservableProperty]
-        private DayRank _selectedDayRank;
+        //[ObservableProperty]
+        //private DayRank _selectedDayRank;
 
 
         public LogDayViewModel(IDatabase<DayEntryModel> database)
@@ -38,23 +38,31 @@ namespace LogYourDayAway.ViewModel
         [RelayCommand]
         private async Task SaveLog()
         {
-            if (!string.IsNullOrWhiteSpace(EntryText))
+            try
             {
-                DayEntryModel newLog = new DayEntryModel
+                if (!string.IsNullOrWhiteSpace(EntryText))
                 {
-                    EntryDate = SelectedDate,
-                    EntryText = EntryText,
-                    DayRank = SelectedRank
-                };
-                await _database.AddAsync(newLog);
+                    DayEntryModel newLog = new DayEntryModel
+                    {
+                        EntryDate = SelectedDate,
+                        EntryText = EntryText,
+                        DayRank = SelectedRank
+                    };
+                    await _database.AddAsync(newLog);
 
-                WeakReferenceMessenger.Default.Send(new LogSavedMessage());
+                    WeakReferenceMessenger.Default.Send(new LogSavedMessage());
 
-                await Shell.Current.GoToAsync("..");
+                    await Shell.Current.GoToAsync("..");
+                }
+                else
+                {
+                    Debug.WriteLine("Entry text is empty. Log not saved.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Debug.WriteLine("Entry text is empty. Log not saved.");
+                Debug.WriteLine($"Could not save log to database: {ex}");
+                throw;
             }
         }
     }

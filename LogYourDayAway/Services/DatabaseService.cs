@@ -2,13 +2,12 @@
 
 namespace LogYourDayAway.Services
 {
-    public class DatabaseService<T> : IDatabase<T> where T : class, new()
+    public class DatabaseService<T> : IDatabase<T> where T : class, IEntity, new()
     {
         private readonly SQLiteAsyncConnection _database;
 
         public DatabaseService()
         {
-            //_database = new SQLiteAsyncConnection(DbSettings.DatabaseFilename, DbSettings.Flags);
 
             _database = DbSettings.OpenDatabase();
         }
@@ -23,8 +22,7 @@ namespace LogYourDayAway.Services
         public async Task AddAsync(T item)
         {
             await Init();
-            var prop = typeof(T).GetProperty("Id");
-            if (prop != null && (int)prop.GetValue(item) != 0)
+            if (item.Id != 0)
             {
                 await _database.UpdateAsync(item);
             }
@@ -43,12 +41,17 @@ namespace LogYourDayAway.Services
         public async Task<T> GetByIdAsync(int id)
         {
             await Init();
-            var prop = typeof(T).GetProperty("Id");
-            if (prop == null)
+            try
             {
-                throw new InvalidOperationException($"Type {typeof(T).Name} does not contain a property named 'Id'.");
+                var output = await _database.Table<T>().Where(i => i.Id == id).FirstOrDefaultAsync();
+
+                return output;
             }
-            return await _database.Table<T>().Where(i => (int)prop.GetValue(i) == id).FirstOrDefaultAsync();
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Did not find a record");
+                throw;
+            }
         }
 
         public async Task<List<T>> GetItemsAsync()

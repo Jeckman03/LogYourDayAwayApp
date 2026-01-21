@@ -69,6 +69,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="EditLogView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="LogDayView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

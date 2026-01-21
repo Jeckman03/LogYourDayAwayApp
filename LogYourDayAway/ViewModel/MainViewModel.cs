@@ -6,10 +6,11 @@ using LogYourDayAway.Models;
 using LogYourDayAway.Services;
 using System.Collections.ObjectModel;
 using LogYourDayAway.Messages;
+using System.Diagnostics;
 
 namespace LogYourDayAway.ViewModel
 {
-    public partial class MainViewModel : ObservableObject
+    public partial class MainViewModel : BaseViewModel
     {
 
         [ObservableProperty]
@@ -42,37 +43,116 @@ namespace LogYourDayAway.ViewModel
             Entries = new ObservableCollection<DayEntryModel>(list);
         }
 
+        partial void OnSelectedDateChanged(DateTime value)
+        {
+            if (IsBusy) return;
+
+            try
+            {
+                IsBusy = true;
+
+                SelectedDate = value;
+                LoadEntriesAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error loading entries for selected date: " + ex.Message);
+                throw;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
         [RelayCommand]
         private void NextDay()
         {
-            SelectedDate = SelectedDate.AddDays(1);
-            LoadEntriesAsync();
+            IsBusy = true;
+
+            try
+            {
+                SelectedDate = SelectedDate.AddDays(1);
+                LoadEntriesAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                throw;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         [RelayCommand]
         private void PreviousDay()
         {
-            SelectedDate = SelectedDate.AddDays(-1);
-            LoadEntriesAsync();
+            IsBusy = true;
+
+            try
+            {
+                SelectedDate = SelectedDate.AddDays(-1);
+                LoadEntriesAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                throw;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         [RelayCommand]
         private async void LogDay()
         {
-            //string textEntry = await Shell.Current.DisplayPromptAsync("Log Day", "Enter your day", "OK", "Cancel");
-            //if (!string.IsNullOrWhiteSpace(textEntry))
-            //{
-            //    DayEntryModel newLog = new DayEntryModel { EntryDate = SelectedDate, EntryText = textEntry };
-            //    Entries.Add(newLog);
+            IsBusy = true;
 
-            //    await _database.AddAsync(newLog);
-
-            //}
-
-            await Shell.Current.GoToAsync("LogDayView", true, new Dictionary<string, object>
+            try
             {
-                { "SelectedDate", SelectedDate }
-            });
+                var existingLog = await _dayEntryService.GetLogForCurrentYear(SelectedDate);
+
+                if (existingLog != null)
+                {
+                    bool answer = await Shell.Current.DisplayAlertAsync("Existing Log Found",
+                        "A log for this date already exists. Do you want to edit it?",
+                        "Yes", "No");
+
+                    if (answer)
+                    {
+                        // Navigate to edit existing log
+                        await Shell.Current.GoToAsync("EditLogView", true, new Dictionary<string, object>
+                        {
+                            { "LogEntryId", existingLog.Id }
+                        });
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else 
+                {
+                    await Shell.Current.GoToAsync("LogDayView", true, new Dictionary<string, object>
+                    {
+                        { "SelectedDate", SelectedDate }
+                    });
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error navigating to LogDayView: " + ex.Message);
+                throw;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

@@ -6,7 +6,13 @@
              xmlns:models="clr-namespace:LogYourDayAway.Models"
              x:DataType="local:MainViewModel">
 
+
+    
+
     <Grid RowDefinitions="Auto,Auto,*,Auto">
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                   IsVisible="{Binding IsBusy}" />
 
         <Label Grid.Row="0"
             Text="Log Your Day Away"

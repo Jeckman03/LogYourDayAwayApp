@@ -23,10 +23,12 @@ namespace LogYourDayAway
             // Views
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<LogDayView>();
+            builder.Services.AddTransient<EditLogView>();
 
             // ViewModels
             builder.Services.AddTransient<MainViewModel>();
             builder.Services.AddTransient<LogDayViewModel>();
+            builder.Services.AddTransient<EditLogViewModel>();
 
 
             // Services

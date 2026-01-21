@@ -6,6 +6,7 @@
         {
             InitializeComponent();
             Routing.RegisterRoute("LogDayView", typeof(LogDayView));
+            Routing.RegisterRoute("EditLogView", typeof(EditLogView));
         }
     }
 }

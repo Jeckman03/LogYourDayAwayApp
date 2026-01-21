@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LogYourDayAway.EditLogView"
+             xmlns:local="clr-namespace:LogYourDayAway.ViewModel"
+             xmlns:model="clr-namespace:LogYourDayAway.Models"
+             x:DataType="local:EditLogViewModel"
+             Title="Edit Log">
+
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, *">
+        <Label Grid.Row="0"
+           Text="Write Something About Your Day"
+           VerticalOptions="Center" 
+           HorizontalOptions="Center"
+           FontSize="Large"
+           Margin="0,0,0,20"/>
+        <Border Grid.Row="1">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+            <Editor x:Name="editor"
+                Placeholder="Write shomething about your day!"
+                Text="{Binding EntryText}"
+                Margin="10"
+                HeightRequest="200"/>
+        </Border>
+
+        <Label Grid.Row="2"
+           Text="Select Day Rank:" 
+           Margin="0,20,0,5"/>
+
+        <Border Grid.Row="3"
+            Padding="10">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+
+            <Picker Title="Quality of day"
+                ItemsSource="{Binding DayRanks}"
+                SelectedItem="{Binding SelectedRank}" />
+        </Border>
+
+        <Button Grid.Row="4"
+            Text="Log Day"
+            VerticalOptions="End"
+            Command="{Binding SaveLogCommand}"/>
+
+    </Grid>
+</ContentPage>
