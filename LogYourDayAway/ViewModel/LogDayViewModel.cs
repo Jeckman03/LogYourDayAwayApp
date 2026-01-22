@@ -53,6 +53,8 @@ namespace LogYourDayAway.ViewModel
                     WeakReferenceMessenger.Default.Send(new LogSavedMessage());
 
                     await Shell.Current.GoToAsync("..");
+
+
                 }
                 else
                 {

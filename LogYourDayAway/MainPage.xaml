@@ -1,15 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="LogYourDayAway.MainPage"
              xmlns:local="clr-namespace:LogYourDayAway.ViewModel"
              xmlns:models="clr-namespace:LogYourDayAway.Models"
+             x:Name="ThisPage"
              x:DataType="local:MainViewModel">
 
 
-    
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior
+            EventName="Appearing"
+            Command="{Binding LoadEntriesAsyncCommand}" />
+    </ContentPage.Behaviors>
 
-    <Grid RowDefinitions="Auto,Auto,*,Auto">
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
 
         <ActivityIndicator IsRunning="{Binding IsBusy}"
                    IsVisible="{Binding IsBusy}" />
@@ -27,15 +33,65 @@
                     FontAttributes="Bold"
                     Format="MM/dd/yy"/>
 
-        <Border Grid.Row="2"
+        <HorizontalStackLayout Grid.Row="2"
+                       HorizontalOptions="Center"
+                       Padding="5">
+            <Border Margin="5">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+                <Label Text="Great" 
+               BackgroundColor="#1976D2"
+               Style="{StaticResource QualityDayIcons}"/>
+            </Border>
+
+            <Border Margin="5">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+                <Label Text="Good" 
+           BackgroundColor="#4CAF50"
+           Style="{StaticResource QualityDayIcons}"/>
+            </Border>
+
+            <Border Margin="5">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+                <Label Text="Average" 
+           BackgroundColor="#FFC107"
+           Style="{StaticResource QualityDayIcons}"/>
+            </Border>
+
+            <Border Margin="5">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+                <Label Text="Bad" 
+           BackgroundColor="#D32F2F"
+           Style="{StaticResource QualityDayIcons}"/>
+            </Border>
+
+            <Border Margin="5">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="5" />
+                </Border.StrokeShape>
+                <Label Text="Awful" 
+           BackgroundColor="#212121"
+           Style="{StaticResource QualityDayIcons}"/>
+            </Border>
+        </HorizontalStackLayout>
+
+        <Border Grid.Row="3"
                 Padding="5"
                 BackgroundColor="LightGray">
-            
+
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="10"/>
             </Border.StrokeShape>
 
             <CollectionView ItemsSource="{Binding Entries}"
+                            SelectionMode="None"
                             EmptyView="No current log entries for this date.">
                 <CollectionView.GestureRecognizers>
                     <SwipeGestureRecognizer Direction="Left"
@@ -50,8 +106,19 @@
                                 Padding="5"
                                 Margin="0,5,0,0"
                                 StrokeThickness="4"
-                                BackgroundColor="White">
-                            
+                                BackgroundColor="White"
+                                x:Name="LogItem">
+
+                            <Border.Behaviors>
+                                <toolkit:TouchBehavior
+                                    LongPressCommand="{Binding Path=BindingContext.EditItemCommand, Source={x:Reference Name=ThisPage}}"
+                                    LongPressCommandParameter="{Binding Source={x:Reference LogItem}, Path=BindingContext}"
+                                    LongPressDuration="500"
+                                    DefaultAnimationDuration="100"
+                                    DefaultOpacity="1.0"
+                                    PressedOpacity="0.6" />
+                            </Border.Behaviors>
+
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="10"/>
                             </Border.StrokeShape>
@@ -60,31 +127,31 @@
                                 <DataTrigger TargetType="Border"
                                  Binding="{Binding DayRank}"
                                  Value="{x:Static models:DayRank.Great}">
-                                    <Setter Property="Stroke" Value="Green" />
+                                    <Setter Property="Stroke" Value="#1976D2" />
                                 </DataTrigger>
 
                                 <DataTrigger TargetType="Border"
                                  Binding="{Binding DayRank}"
                                  Value="{x:Static models:DayRank.Good}">
-                                    <Setter Property="Stroke" Value="LightGreen" />
+                                    <Setter Property="Stroke" Value="#4CAF50" />
                                 </DataTrigger>
 
                                 <DataTrigger TargetType="Border"
                                  Binding="{Binding DayRank}"
                                  Value="{x:Static models:DayRank.Average}">
-                                    <Setter Property="Stroke" Value="DarkGoldenrod" />
+                                    <Setter Property="Stroke" Value="#FFC107" />
                                 </DataTrigger>
 
                                 <DataTrigger TargetType="Border"
                                  Binding="{Binding DayRank}"
                                  Value="{x:Static models:DayRank.Bad}">
-                                    <Setter Property="Stroke" Value="Red" />
+                                    <Setter Property="Stroke" Value="#D32F2F" />
                                 </DataTrigger>
 
                                 <DataTrigger TargetType="Border"
                                  Binding="{Binding DayRank}"
                                  Value="{x:Static models:DayRank.Awful}">
-                                    <Setter Property="Stroke" Value="Black" />
+                                    <Setter Property="Stroke" Value="#212121" />
                                 </DataTrigger>
                             </Border.Triggers>
 
@@ -100,14 +167,12 @@
                                 </Label>
                             </Grid>
                         </Border>
-
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </Border>
 
-
-        <Button Grid.Row="3"
+        <Button Grid.Row="4"
                 x:Name="CounterBtn"
                 Text="Log Day" 
                 SemanticProperties.Hint="Counts the number of times you click"

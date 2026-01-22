@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using LogYourDayAway.Messages;
 using LogYourDayAway.Models;
 using LogYourDayAway.Services;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -14,7 +16,7 @@ namespace LogYourDayAway.ViewModel
     public partial class EditLogViewModel : BaseViewModel
     {
         private readonly IDatabase<DayEntryModel> _database;
-        private readonly DayEntryService _dayEntryService;
+
         [ObservableProperty]
         private DayRank _selectedRank;
 
@@ -33,10 +35,9 @@ namespace LogYourDayAway.ViewModel
         private DayEntryModel CurrentEntry = new();
         public List<DayRank> DayRanks { get; } = Enum.GetValues(typeof(DayRank)).Cast<DayRank>().ToList();
 
-        public EditLogViewModel(IDatabase<DayEntryModel> database, DayEntryService dayEntryService)
+        public EditLogViewModel(IDatabase<DayEntryModel> database)
         {
             _database = database;
-            _dayEntryService = dayEntryService;
         }
 
         partial void OnLogEntryIdChanged(int value)
@@ -60,6 +61,35 @@ namespace LogYourDayAway.ViewModel
             catch (Exception ex)
             {
                 await Shell.Current.DisplayAlertAsync("Error", $"Failed to load entry: {ex.Message}", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        private async Task SaveEditedLog()
+        {
+            IsBusy = true;
+
+            try
+            {
+                await _database.UpdateAsync(new DayEntryModel
+                {
+                    Id = CurrentEntry.Id,
+                    EntryDate = SelectedDate,
+                    DayRank = SelectedRank,
+                    EntryText = EntryText
+                });
+
+                WeakReferenceMessenger.Default.Send(new LogSavedMessage());
+
+                await Shell.Current.GoToAsync("..");
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlertAsync("Error", $"Failed to save entry: {ex.Message}", "OK");
             }
             finally
             {

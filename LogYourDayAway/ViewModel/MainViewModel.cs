@@ -37,7 +37,9 @@ namespace LogYourDayAway.ViewModel
             });
         }
 
-        private async void LoadEntriesAsync()
+
+        [RelayCommand]
+        private async Task LoadEntriesAsync()
         {
             var list = await _dayEntryService.GetEntryLogsByDay(SelectedDate);
             Entries = new ObservableCollection<DayEntryModel>(list);
@@ -66,14 +68,14 @@ namespace LogYourDayAway.ViewModel
         }
 
         [RelayCommand]
-        private void NextDay()
+        private async Task NextDay()
         {
             IsBusy = true;
 
             try
             {
                 SelectedDate = SelectedDate.AddDays(1);
-                LoadEntriesAsync();
+                await LoadEntriesAsync();
             }
             catch (Exception ex)
             {
@@ -87,14 +89,14 @@ namespace LogYourDayAway.ViewModel
         }
 
         [RelayCommand]
-        private void PreviousDay()
+        private async Task PreviousDay()
         {
             IsBusy = true;
 
             try
             {
                 SelectedDate = SelectedDate.AddDays(-1);
-                LoadEntriesAsync();
+                await LoadEntriesAsync();
             }
             catch (Exception ex)
             {
@@ -108,7 +110,7 @@ namespace LogYourDayAway.ViewModel
         }
 
         [RelayCommand]
-        private async void LogDay()
+        private async Task LogDay()
         {
             IsBusy = true;
 
@@ -147,6 +149,56 @@ namespace LogYourDayAway.ViewModel
             catch (Exception ex)
             {
                 Debug.WriteLine("Error navigating to LogDayView: " + ex.Message);
+                throw;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        private void SelectItem(DayEntryModel item)
+        {
+            SelectedEntry = item;
+        }
+
+        [RelayCommand]
+        private async Task EditItem(DayEntryModel item)
+        {
+
+            if (item == null)
+            {
+                await Shell.Current.DisplayAlertAsync("No Selection", "Please select a log entry to edit.", "OK");
+                return;
+            }
+
+            IsBusy = true;
+
+            try
+            {
+                string action = await Shell.Current.DisplayActionSheetAsync("Edit or Delete Log?", "Cancel", null, "Edit", "Delete");
+
+                if (action == "Edit")
+                {
+                    await Shell.Current.GoToAsync("EditLogView", true, new Dictionary<string, object>
+                    {
+                        { "LogEntryId", item.Id }
+                    });
+                }
+                else if (action == "Delete")
+                {
+                    bool confirm = await Shell.Current.DisplayAlertAsync("Confirm Delete", "Are you sure you want to delete this log?", "Yes", "No");
+                    if (confirm)
+                    {
+                        await _database.DeleteAsync(item);
+                        await LoadEntriesAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error navigating to EditLogView: " + ex.Message);
                 throw;
             }
             finally

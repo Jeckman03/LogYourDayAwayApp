@@ -41,9 +41,9 @@
         </Border>
 
         <Button Grid.Row="4"
-            Text="Log Day"
+            Text="Edit Day"
             VerticalOptions="End"
-            Command="{Binding SaveLogCommand}"/>
+            Command="{Binding SaveEditedLogCommand}"/>
 
     </Grid>
 </ContentPage>
