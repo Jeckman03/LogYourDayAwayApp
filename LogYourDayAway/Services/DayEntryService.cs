@@ -35,13 +35,16 @@ namespace LogYourDayAway.Services
         }
 
         public async Task<DayEntryModel?> GetLogForCurrentYear(DateTime date)
-        { 
+        {
             var allEntries = await _database.GetItemsAsync();
             return allEntries
                 .FirstOrDefault(entry => entry.EntryDate.Month == date.Month && entry.EntryDate.Day == date.Day && entry.EntryDate.Year == date.Year);
         }
 
-        
-
+        // Is this a future date
+        public bool IsFutureDate(DateTime date)
+        {
+            return date > DateTime.Now.Date;
+        }
     }
 }

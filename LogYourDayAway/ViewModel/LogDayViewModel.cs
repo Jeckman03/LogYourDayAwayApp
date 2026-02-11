@@ -44,7 +44,7 @@ namespace LogYourDayAway.ViewModel
                 {
                     DayEntryModel newLog = new DayEntryModel
                     {
-                        EntryDate = SelectedDate,
+                        EntryDate = SelectedDate.Date,
                         EntryText = EntryText,
                         DayRank = SelectedRank
                     };

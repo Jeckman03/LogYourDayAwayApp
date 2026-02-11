@@ -6,9 +6,15 @@
     xmlns:local="clr-namespace:LogYourDayAway"
     Title="LogYourDayAway">
 
-    <ShellContent
+
+    <ShellItem Route="LoadingPage">
+        <ShellContent ContentTemplate="{DataTemplate local:LoadingPage}" />
+    </ShellItem>
+
+
+    <!--<ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        ContentTemplate="{DataTemplate local:LoginPage}"
+        Route="MainPage" />-->
 
 </Shell>

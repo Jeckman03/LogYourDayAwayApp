@@ -117,6 +117,7 @@ namespace LogYourDayAway.ViewModel
             try
             {
                 var existingLog = await _dayEntryService.GetLogForCurrentYear(SelectedDate);
+                var isFutureDate = _dayEntryService.IsFutureDate(SelectedDate);
 
                 if (existingLog != null)
                 {
@@ -137,7 +138,12 @@ namespace LogYourDayAway.ViewModel
                         return;
                     }
                 }
-                else 
+                else if (isFutureDate)
+                {
+                    await Shell.Current.DisplayAlertAsync("Future Date", "You cannot log a future date.", "OK");
+                    return;
+                }
+                else
                 {
                     await Shell.Current.GoToAsync("LogDayView", true, new Dictionary<string, object>
                     {

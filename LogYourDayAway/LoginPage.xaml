@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="LogYourDayAway.LoginPage"
+             xmlns:local="clr-namespace:LogYourDayAway.ViewModel"
+             Title="LoginPage"
+             x:DataType="local:LoginViewModel">
+
+    <Grid>
+        <VerticalStackLayout Spacing="25" 
+                             Padding="30" 
+                             VerticalOptions="Center">
+
+            <Image Source="journal_lock_icon.png"
+                   HeightRequest="120"
+                   WidthRequest="120"
+                   HorizontalOptions="Center" />
+
+            <Label Text="Welcome Back"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{StaticResource Primary}" />
+
+            <Entry Placeholder="Enter your password"
+                   Text="{Binding Password}"
+                   IsPassword="True"
+                   BackgroundColor="#F0F0F0"
+                   TextColor="Black"
+                   HeightRequest="50"
+                   CornerRadius="8"
+                   Keyboard="Text">
+                <Entry.Behaviors>
+                    <toolkit:EventToCommandBehavior
+                        EventName="TextChanged"
+                        Command="{Binding ClearErrorCommand}" />
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="Red"
+                   FontSize="14"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding HasError}" />
+
+            <Button Text="Unlock Journal"
+                    Command="{Binding UnlockCommand}"
+                    BackgroundColor="{StaticResource Primary}"
+                    TextColor="White"
+                    HeightRequest="55"
+                    CornerRadius="10"
+                    FontSize="18"
+                    FontAttributes="Bold" />
+
+            <Label Text="Forgot Password? Reset Journal"
+                   TextColor="Gray"
+                   FontSize="Small"
+                   TextDecorations="Underline"
+                   HorizontalOptions="Center"
+                   Margin="0,20,0,0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ResetCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+        </VerticalStackLayout>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           Color="{StaticResource Primary}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Scale="2" />
+    </Grid>
+</ContentPage>

@@ -21,17 +21,22 @@ namespace LogYourDayAway
                 });
 
             // Views
+            builder.Services.AddTransient<SetupPage>();
+            builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<LogDayView>();
             builder.Services.AddTransient<EditLogView>();
 
             // ViewModels
+            builder.Services.AddTransient<SetupViewModel>();
+            builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<MainViewModel>();
             builder.Services.AddTransient<LogDayViewModel>();
             builder.Services.AddTransient<EditLogViewModel>();
 
 
             // Services
+            builder.Services.AddSingleton<UserRepository>();
             builder.Services.AddTransient<DayEntryService>();
             builder.Services.AddSingleton<IDatabase<DayEntryModel>, DatabaseService<DayEntryModel>>();
 

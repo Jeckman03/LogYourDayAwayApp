@@ -1,4 +1,7 @@
-﻿namespace LogYourDayAway
+﻿using LogYourDayAway.Models;
+using LogYourDayAway.Services;
+
+namespace LogYourDayAway
 {
     public partial class App : Application
     {
