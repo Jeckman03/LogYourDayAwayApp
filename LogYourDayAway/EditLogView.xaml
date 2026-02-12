@@ -8,36 +8,52 @@
              Title="Edit Log">
 
     <Grid RowDefinitions="Auto, Auto, Auto, Auto, *">
-        <Label Grid.Row="0"
-           Text="Write Something About Your Day"
-           VerticalOptions="Center" 
-           HorizontalOptions="Center"
-           FontSize="Large"
-           Margin="0,0,0,20"/>
-        <Border Grid.Row="1">
+        <Label LineBreakMode="WordWrap"
+               FontSize="Large"
+               HorizontalTextAlignment="Center"
+               Padding="10"
+               Grid.Row="0">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Write something memorable about: " FontAttributes="Bold" />
+                    <Span Text="{Binding SelectedDate, StringFormat='{0:MM}'}" FontAttributes="Bold"/>
+                    <Span Text="/"/>
+                    <Span Text="{Binding SelectedDate, StringFormat='{0:dd}'}" FontAttributes="Bold"/>
+                    <Span Text="/"/>
+                    <Span Text="{Binding SelectedDate, StringFormat='{0:yyyy}'}" FontAttributes="Bold"/>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Border Grid.Row="1"
+                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundDark}}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="10" />
             </Border.StrokeShape>
             <Editor x:Name="editor"
-                Placeholder="Write shomething about your day!"
-                Text="{Binding EntryText}"
-                Margin="10"
-                HeightRequest="200"/>
+                    Placeholder="Write shomething about your day!"
+                    Text="{Binding EntryText}"
+                    BackgroundColor="Transparent"
+                    HeightRequest="200"/>
         </Border>
 
         <Label Grid.Row="2"
+               FontAttributes="Bold"
            Text="Select Day Rank:" 
            Margin="0,20,0,5"/>
 
         <Border Grid.Row="3"
-            Padding="10">
+                Padding="10"
+                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource CardBackgroundDark}}">
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="10" />
             </Border.StrokeShape>
 
             <Picker Title="Quality of day"
-                ItemsSource="{Binding DayRanks}"
-                SelectedItem="{Binding SelectedRank}" />
+                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                    TitleColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                    BackgroundColor="Transparent"
+                    ItemsSource="{Binding DayRanks}"
+                    SelectedItem="{Binding SelectedRank}" />
         </Border>
 
         <Button Grid.Row="4"

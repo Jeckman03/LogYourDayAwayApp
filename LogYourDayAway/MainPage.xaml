@@ -41,7 +41,7 @@
                     <RoundRectangle CornerRadius="5" />
                 </Border.StrokeShape>
                 <Label Text="Great" 
-               BackgroundColor="#1976D2"
+               BackgroundColor="#4A6B38"
                Style="{StaticResource QualityDayIcons}"/>
             </Border>
 
@@ -50,7 +50,7 @@
                     <RoundRectangle CornerRadius="5" />
                 </Border.StrokeShape>
                 <Label Text="Good" 
-           BackgroundColor="#4CAF50"
+           BackgroundColor="#7FA06F"
            Style="{StaticResource QualityDayIcons}"/>
             </Border>
 
@@ -59,8 +59,9 @@
                     <RoundRectangle CornerRadius="5" />
                 </Border.StrokeShape>
                 <Label Text="Average" 
-           BackgroundColor="#FFC107"
-           Style="{StaticResource QualityDayIcons}"/>
+                       BackgroundColor="#D4C5A9"
+                       TextColor="#2F3E2F"
+                       Style="{StaticResource QualityDayIcons}"/>
             </Border>
 
             <Border Margin="5">
@@ -68,7 +69,7 @@
                     <RoundRectangle CornerRadius="5" />
                 </Border.StrokeShape>
                 <Label Text="Bad" 
-           BackgroundColor="#D32F2F"
+           BackgroundColor="#CC8578"
            Style="{StaticResource QualityDayIcons}"/>
             </Border>
 
@@ -77,14 +78,13 @@
                     <RoundRectangle CornerRadius="5" />
                 </Border.StrokeShape>
                 <Label Text="Awful" 
-           BackgroundColor="#212121"
+           BackgroundColor="#545454"
            Style="{StaticResource QualityDayIcons}"/>
             </Border>
         </HorizontalStackLayout>
 
         <Border Grid.Row="3"
-                Padding="5"
-                BackgroundColor="LightGray">
+                Padding="5">
 
             <Border.StrokeShape>
                 <RoundRectangle CornerRadius="10"/>
@@ -104,10 +104,14 @@
                     <DataTemplate x:DataType="models:DayEntryModel">
                         <Border Stroke="{Binding StatusColor}"
                                 Padding="5"
-                                Margin="0,5,0,0"
+                                Margin="5,5,5,0"
                                 StrokeThickness="4"
-                                BackgroundColor="White"
                                 x:Name="LogItem">
+
+                            <Border.BackgroundColor>
+                                <x:AppThemeBinding Light="{StaticResource CardBackgroundLight}" 
+                                    Dark="{StaticResource CardBackgroundDark}" />
+                            </Border.BackgroundColor>
 
                             <Border.Behaviors>
                                 <toolkit:TouchBehavior
@@ -177,8 +181,6 @@
                 Text="Log Day" 
                 SemanticProperties.Hint="Counts the number of times you click"
                 VerticalOptions="End"
-                HorizontalOptions="Center"
-                WidthRequest="200"
                 Command="{Binding LogDayCommand}"/>
     </Grid>
 

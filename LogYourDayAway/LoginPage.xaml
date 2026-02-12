@@ -29,7 +29,6 @@
                    BackgroundColor="#F0F0F0"
                    TextColor="Black"
                    HeightRequest="50"
-                   CornerRadius="8"
                    Keyboard="Text">
                 <Entry.Behaviors>
                     <toolkit:EventToCommandBehavior

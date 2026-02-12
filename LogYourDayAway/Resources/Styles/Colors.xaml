@@ -6,12 +6,23 @@
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
-    <Color x:Key="Primary">#512BD4</Color>
-    <Color x:Key="PrimaryDark">#ac99ea</Color>
+    <Color x:Key="Primary">#7FA06F</Color>
+    <Color x:Key="PrimaryDark">#556B2F</Color>
     <Color x:Key="PrimaryDarkText">#242424</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
+    <Color x:Key="Secondary">#D4C5A9</Color>
     <Color x:Key="SecondaryDarkText">#9880e5</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+    <Color x:Key="Tertiary">#E94560</Color>
+    <Color x:Key="PageBackgroundLight">#F9F7F2</Color>
+    <Color x:Key="PageBackgroundDark">#1A2421</Color>
+    <Color x:Key="Surface">#FFFFFF</Color>
+    <Color x:Key="Accent">#E69A8D</Color>
+    <Color x:Key="CardBackgroundLight">#FFFFFF</Color>
+    <Color x:Key="CardBackgroundDark">#2C3633</Color>
+    <Color x:Key="TextPrimaryLight">#2F3E2F</Color>
+    <Color x:Key="TextPrimaryDark">#E0E6E0</Color>
+    <Color x:Key="TextSecondaryLight">#737F73</Color>
+    <Color x:Key="TextSecondaryDark">#A0ACA0</Color>
+    <Color x:Key="Error">#B00020</Color>
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>

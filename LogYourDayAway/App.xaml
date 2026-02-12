@@ -12,17 +12,26 @@
 
             <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
                 <Setter Property="Padding" Value="20" />
+                <Setter Property="BackgroundColor" 
+            Value="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}" />
             </Style>
 
             <Style TargetType="Button">
                 <Setter Property="Margin" Value="20" />
                 <Setter Property="HeightRequest" Value="50" />
                 <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Padding" Value="14,10" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="HeightRequest" Value="55" />
+                <Setter Property="Shadow">
+                    <Shadow Brush="Black" Offset="0,4" Opacity="0.1" Radius="5" />
+                </Setter>
             </Style>
 
             <Style x:Key="QualityDayIcons" TargetType="Label" >
                 <Setter Property="Padding" Value="5" />
-                <Setter Property="TextColor" Value="White" />
+                <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}"  />
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="FontSize" Value="Micro" />
                 <Setter Property="Shadow">
