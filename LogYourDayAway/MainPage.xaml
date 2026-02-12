@@ -127,31 +127,31 @@
                                 <DataTrigger TargetType="Border"
                                  Binding="{Binding DayRank}"
                                  Value="{x:Static models:DayRank.Great}">
-                                    <Setter Property="Stroke" Value="#1976D2" />
+                                    <Setter Property="Stroke" Value="#4A6B38" />
                                 </DataTrigger>
 
                                 <DataTrigger TargetType="Border"
                                  Binding="{Binding DayRank}"
                                  Value="{x:Static models:DayRank.Good}">
-                                    <Setter Property="Stroke" Value="#4CAF50" />
+                                    <Setter Property="Stroke" Value="#7FA06F" />
                                 </DataTrigger>
 
                                 <DataTrigger TargetType="Border"
                                  Binding="{Binding DayRank}"
                                  Value="{x:Static models:DayRank.Average}">
-                                    <Setter Property="Stroke" Value="#FFC107" />
+                                    <Setter Property="Stroke" Value="#D4C5A9" />
                                 </DataTrigger>
 
                                 <DataTrigger TargetType="Border"
                                  Binding="{Binding DayRank}"
                                  Value="{x:Static models:DayRank.Bad}">
-                                    <Setter Property="Stroke" Value="#D32F2F" />
+                                    <Setter Property="Stroke" Value="#CC8578" />
                                 </DataTrigger>
 
                                 <DataTrigger TargetType="Border"
                                  Binding="{Binding DayRank}"
                                  Value="{x:Static models:DayRank.Awful}">
-                                    <Setter Property="Stroke" Value="#212121" />
+                                    <Setter Property="Stroke" Value="#545454" />
                                 </DataTrigger>
                             </Border.Triggers>
 
