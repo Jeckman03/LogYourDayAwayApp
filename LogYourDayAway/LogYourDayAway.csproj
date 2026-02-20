@@ -50,7 +50,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-    <MauiIcon Include="Resources\AppIcon\logdayicon.png" Color="#2F3E2F" />
+    <MauiIcon Include="Resources\AppIcon\logdayicon.png" ForegroundScale="0.65" Color="#2F3E2F" />
 
 		<!-- Splash Screen -->
     <MauiSplashScreen Include="Resources\Splash\logdaylogosplash.png" Color="#2F3E2F" BaseSize="1400,1400" />
