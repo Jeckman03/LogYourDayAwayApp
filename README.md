@@ -26,10 +26,7 @@ LogYourDayAway is designed with a focus on privacy and user experience. It featu
 
 | Login & Security | Journal Entries | Day Ranking |
 | :---: | :---: | :---: |
-| <img width="394" height="868" alt="Screenshot 2026-02-19 203356" src="https://github.com/user-attachments/assets/295c38b5-eb58-4185-96ee-444c03aeb85a" />
-_image" width="250"/> | <img width="401" height="854" alt="Screenshot 2026-02-19 203425" src="https://github.com/user-attachments/assets/89dc1ba9-b0bf-4076-a77a-bb06bfcb9ba7" />
-al_image" width="250"/> | <img width="400" height="854" alt="Screenshot 2026-02-19 203442" src="https://github.com/user-attachments/assets/39f06848-dee2-4d34-ac94-e4e17e9923e4" />
-_rank_image" width="250"/> |
+| <img width="250" alt="Screenshot 2026-02-19 203356" src="https://github.com/user-attachments/assets/295c38b5-eb58-4185-96ee-444c03aeb85a" /> | <img width="250" alt="Screenshot 2026-02-19 203425" src="https://github.com/user-attachments/assets/89dc1ba9-b0bf-4076-a77a-bb06bfcb9ba7" /> | <img width="250" alt="Screenshot 2026-02-19 203442" src="https://github.com/user-attachments/assets/39f06848-dee2-4d34-ac94-e4e17e9923e4" /> |
 
 ## 🚀 Getting Started
 
