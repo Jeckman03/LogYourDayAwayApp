@@ -6,8 +6,16 @@
              xmlns:local="clr-namespace:LogYourDayAway.ViewModel"
              xmlns:models="clr-namespace:LogYourDayAway.Models"
              x:Name="ThisPage"
+             Shell.FlyoutBehavior="Disabled"
              x:DataType="local:MainViewModel">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Logout"
+                     Order="Primary"
+                     Priority="0"
+                     Command="{Binding LogoutCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
 
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior
@@ -179,7 +187,6 @@
         <Button Grid.Row="4"
                 x:Name="CounterBtn"
                 Text="Log Day" 
-                SemanticProperties.Hint="Counts the number of times you click"
                 VerticalOptions="End"
                 Command="{Binding LogDayCommand}"/>
     </Grid>

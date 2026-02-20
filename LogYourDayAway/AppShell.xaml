@@ -11,6 +11,14 @@
         <ShellContent ContentTemplate="{DataTemplate local:LoadingPage}" />
     </ShellItem>
 
+    <ShellItem Route="LoginPage" FlyoutItemIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" />
+    </ShellItem>
+
+    <ShellItem Route="MainPage" FlyoutItemIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+    </ShellItem>
+
 
     <!--<ShellContent
         Title="Home"

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:LogYourDayAway.ViewModel"
+             x:Class="LogYourDayAway.RecoveryPage"
+             Title="Recovery">
+    <VerticalStackLayout>
+        <Label Text="⚠️ IMPORTANT" 
+               TextColor="{StaticResource Error}" 
+               FontSize="24" 
+               FontAttributes="Bold" 
+               HorizontalOptions="Center" />
+
+        <Label Text="This is the ONLY way to recover your account if you forget your password. Write this down or take a screenshot."
+               HorizontalTextAlignment="Center" />
+
+        <Border Stroke="{StaticResource Primary}"
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 10"
+                Padding="20">
+            <Label Text="{Binding RecoveryCode}"
+                   FontSize="32"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource Primary}"
+                   HorizontalOptions="Center" />
+        </Border>
+
+        <Button Text="I Have Saved It"
+                Command="{Binding ConfirmSavedCommand}"
+                BackgroundColor="{StaticResource Primary}"
+                TextColor="White"
+                CornerRadius="20"
+                HeightRequest="55" 
+                Margin="0,20,0,0"/>
+    </VerticalStackLayout>
+</ContentPage>

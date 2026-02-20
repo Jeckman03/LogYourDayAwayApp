@@ -5,7 +5,6 @@ using LogYourDayAway.Messages;
 using LogYourDayAway.Models;
 using LogYourDayAway.Services;
 using System.Collections.ObjectModel;
-using LogYourDayAway.Messages;
 using System.Diagnostics;
 
 namespace LogYourDayAway.ViewModel
@@ -22,12 +21,10 @@ namespace LogYourDayAway.ViewModel
         [ObservableProperty]
         private DateTime selectedDate = DateTime.Now;
 
-        private readonly IDatabase<DayEntryModel> _database;
         private readonly DayEntryService _dayEntryService;
 
-        public MainViewModel(IDatabase<DayEntryModel> database, DayEntryService dayEntryService)
+        public MainViewModel(DayEntryService dayEntryService)
         {
-            _database = database;
             _dayEntryService = dayEntryService;
             LoadEntriesAsync();
 
@@ -197,7 +194,7 @@ namespace LogYourDayAway.ViewModel
                     bool confirm = await Shell.Current.DisplayAlertAsync("Confirm Delete", "Are you sure you want to delete this log?", "Yes", "No");
                     if (confirm)
                     {
-                        await _database.DeleteAsync(item);
+                        await _dayEntryService.DeleteEntryAsync(item);
                         await LoadEntriesAsync();
                     }
                 }
@@ -210,6 +207,19 @@ namespace LogYourDayAway.ViewModel
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        private async Task Logout()
+        {
+            bool confirm = await Shell.Current.DisplayAlertAsync("Logout", "Are you sure you want to exit?", "Yes", "Cancel");
+
+            if (confirm)
+            {
+                SecureStorage.Remove("session_token");
+
+                await Shell.Current.GoToAsync("//LoginPage");
             }
         }
     }

@@ -30,7 +30,7 @@
                 <RoundRectangle CornerRadius="10" />
             </Border.StrokeShape>
             <Editor x:Name="editor"
-                    Placeholder="Write shomething about your day!"
+                    Placeholder="Write something about your day!"
                     Text="{Binding EntryText}"
                     BackgroundColor="Transparent"
                     HeightRequest="200"/>

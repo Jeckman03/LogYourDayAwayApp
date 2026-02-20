@@ -11,7 +11,7 @@ namespace LogYourDayAway.ViewModel
 {
     public partial class SetupViewModel : BaseViewModel
     {
-        private readonly UserRepository _userRepository;
+        private readonly UserService _userRepository;
 
         [ObservableProperty]
         private string _username;
@@ -28,7 +28,7 @@ namespace LogYourDayAway.ViewModel
 
         public bool PasswordMatch => Password == ConfirmPassword;
 
-        public SetupViewModel(UserRepository userRepository)
+        public SetupViewModel(UserService userRepository)
         {
             _userRepository = userRepository;
         }
@@ -57,9 +57,11 @@ namespace LogYourDayAway.ViewModel
                     Username = Username
                 };
 
-                await _userRepository.SaveUserAsync(newUser);
+                _userRepository.Add(newUser);
 
-                await Shell.Current.GoToAsync("MainPage");
+                string code = GenerateRecoveryCode();
+
+                await Shell.Current.GoToAsync($"{nameof(RecoveryPage)}?code={code}");
 
             }
             catch (Exception ex)
@@ -67,6 +69,20 @@ namespace LogYourDayAway.ViewModel
                 ErrorMessage = $"Setup failed: {ex.Message}";
             }
 
+        }
+
+        private string GenerateRecoveryCode()
+        {
+            var chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+            var random = new Random();
+            var result = new char[12];
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = chars[random.Next(chars.Length)];
+            }
+
+            return $"{new string(result, 0, 4)}-{new string(result, 4, 4)}-{new string(result, 8, 4)}";
         }
 
         private string HashString(string input)

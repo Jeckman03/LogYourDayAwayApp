@@ -4,7 +4,9 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="LogYourDayAway.LoginPage"
              xmlns:local="clr-namespace:LogYourDayAway.ViewModel"
-             Title="LoginPage"
+             Shell.NavBarIsVisible="False"
+             Shell.FlyoutBehavior="Disabled"
+             Title="Login"
              x:DataType="local:LoginViewModel">
 
     <Grid>
@@ -12,7 +14,7 @@
                              Padding="30" 
                              VerticalOptions="Center">
 
-            <Image Source="journal_lock_icon.png"
+            <Image Source="logdayawaylogo.png"
                    HeightRequest="120"
                    WidthRequest="120"
                    HorizontalOptions="Center" />
@@ -26,8 +28,6 @@
             <Entry Placeholder="Enter your password"
                    Text="{Binding Password}"
                    IsPassword="True"
-                   BackgroundColor="#F0F0F0"
-                   TextColor="Black"
                    HeightRequest="50"
                    Keyboard="Text">
                 <Entry.Behaviors>
@@ -51,7 +51,18 @@
                     FontSize="18"
                     FontAttributes="Bold" />
 
-            <Label Text="Forgot Password? Reset Journal"
+            <Label Text="Forgot Password?"
+                   TextColor="Gray"
+                   FontSize="Small"
+                   TextDecorations="Underline"
+                   HorizontalOptions="Center"
+                   Margin="0,20,0,0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label Text="Reset Journal"
                    TextColor="Gray"
                    FontSize="Small"
                    TextDecorations="Underline"

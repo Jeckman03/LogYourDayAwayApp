@@ -4,10 +4,10 @@
              x:Class="LogYourDayAway.LoadingPage"
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False">
-    <Gird>
+    <Grid>
         <ActivityIndicator IsRunning="True"
                            HorizontalOptions="Center"
                            VerticalOptions="Center"
                            Color="{StaticResource Primary}"/>
-    </Gird>
+    </Grid>
 </ContentPage>

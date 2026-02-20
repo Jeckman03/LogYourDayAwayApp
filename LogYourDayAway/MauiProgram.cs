@@ -26,6 +26,8 @@ namespace LogYourDayAway
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<LogDayView>();
             builder.Services.AddTransient<EditLogView>();
+            builder.Services.AddTransient<RecoveryPage>();
+            builder.Services.AddTransient<ResetPasswordPage>();
 
             // ViewModels
             builder.Services.AddTransient<SetupViewModel>();
@@ -33,12 +35,15 @@ namespace LogYourDayAway
             builder.Services.AddTransient<MainViewModel>();
             builder.Services.AddTransient<LogDayViewModel>();
             builder.Services.AddTransient<EditLogViewModel>();
+            builder.Services.AddTransient<RecoveryViewModel>();
+            builder.Services.AddTransient<ResetPasswordViewModel>();
 
 
             // Services
-            builder.Services.AddSingleton<UserRepository>();
-            builder.Services.AddTransient<DayEntryService>();
-            builder.Services.AddSingleton<IDatabase<DayEntryModel>, DatabaseService<DayEntryModel>>();
+            builder.Services.AddSingleton<UserService>();
+            builder.Services.AddSingleton<DayEntryService>();
+            builder.Services.AddSingleton<DatabaseHelper>();
+            builder.Services.AddSingleton<IDatabase<DayEntryModel>, DayEntryService>();
 
 
 

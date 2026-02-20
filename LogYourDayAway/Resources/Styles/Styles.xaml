@@ -10,9 +10,6 @@
             Value="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource PageBackgroundDark}}" />
     </Style>
 
-    <Style TargetType="ActivityIndicator">
-        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
-    </Style>
 
     <Style TargetType="IndicatorView">
         <Setter Property="IndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"/>
@@ -404,9 +401,9 @@
 
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
         <Setter Property="Shell.BackgroundColor" 
-            Value="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}" />
+            Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource CardBackgroundDark}}" />
         <Setter Property="Shell.ForegroundColor" 
-            Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
+            Value="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
 
         <Setter Property="Shell.TabBarBackgroundColor" 
             Value="{AppThemeBinding Light={StaticResource PageBackgroundLight}, Dark={StaticResource CardBackgroundDark}}" />

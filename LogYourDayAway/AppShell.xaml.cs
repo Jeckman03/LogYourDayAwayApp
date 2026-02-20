@@ -10,6 +10,8 @@
             Routing.RegisterRoute("MainPage", typeof(MainPage));
             Routing.RegisterRoute("LogDayView", typeof(LogDayView));
             Routing.RegisterRoute("EditLogView", typeof(EditLogView));
+            Routing.RegisterRoute("RecoveryPage", typeof(RecoveryPage));
+            Routing.RegisterRoute("ResetPasswordPage", typeof(ResetPasswordPage));
         }
     }
 }

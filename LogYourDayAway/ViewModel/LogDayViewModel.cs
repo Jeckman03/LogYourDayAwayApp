@@ -24,9 +24,6 @@ namespace LogYourDayAway.ViewModel
         [ObservableProperty]
         private string _entryText;
 
-        //[ObservableProperty]
-        //private DayRank _selectedDayRank;
-
 
         public LogDayViewModel(IDatabase<DayEntryModel> database)
         {

@@ -23,23 +23,20 @@
                    Margin="0,0,0,20" />
 
             <Label Text="What should we call you?" FontSize="14" TextColor="Gray"/>
-            <Entry Placeholder="e.g. Jeff"
+            <Entry Placeholder="e.g. John"
                    Text="{Binding Username}"
-                   HeightRequest="50"
-                   BackgroundColor="#F5F5F5" />
+                   HeightRequest="50" />
 
             <Label Text="Create a Password" FontSize="14" TextColor="Gray" Margin="0,10,0,0"/>
             <Entry Placeholder="Password"
                    Text="{Binding Password}"
                    IsPassword="True"
-                   HeightRequest="50"
-                   BackgroundColor="#F5F5F5" />
+                   HeightRequest="50" />
 
             <Entry Placeholder="Confirm Password"
                    Text="{Binding ConfirmPassword}"
                    IsPassword="True"
-                   HeightRequest="50"
-                   BackgroundColor="#F5F5F5" />
+                   HeightRequest="50" />
 
             <Label Text="{Binding ErrorMessage}"
                    TextColor="Red"
