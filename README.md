@@ -62,4 +62,4 @@ Jeff Eckman
 
 LinkedIn: [www.linkedin.com/in/jeff-eckman-b514a111]
 
-GitHub: [Insert Link Here]
+GitHub: [(https://github.com/Jeckman03)]
