@@ -21,6 +21,7 @@ namespace LogYourDayAway
                 });
 
             // Views
+            builder.Services.AddTransient<LoadingPage>();
             builder.Services.AddTransient<SetupPage>();
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<MainPage>();

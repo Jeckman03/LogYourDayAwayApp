@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme -->
+    <style name="Maui.MainTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Maui.MainTheme.NoActionBar" parent="Maui.MainTheme">
+    </style>
+
+    <!-- Override the MauiAppBarLayout style to use a proper widget parent instead of a theme overlay -->
+    <style name="MauiAppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface">
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+</resources>

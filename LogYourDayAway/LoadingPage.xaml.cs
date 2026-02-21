@@ -15,22 +15,43 @@ public partial class LoadingPage : ContentPage
 	{
 		base.OnAppearing();
 
-		bool userExists = await Task.Run(() =>
+		try
 		{
-			using (var conn = DbSettings.OpenSynchronousDatabase())
-			{
-				conn.CreateTable<UserModel>();
-				return conn.Table<UserModel>().Count() > 0;
-			}
-		});
+			// Add a small delay to ensure the page is fully loaded
+			await Task.Delay(100);
 
-		if (userExists)
-		{
-			await Shell.Current.GoToAsync("LoginPage");
+			bool userExists = await Task.Run(() =>
+			{
+				try
+				{
+					using (var conn = DbSettings.OpenSynchronousDatabase())
+					{
+						conn.CreateTable<UserModel>();
+						return conn.Table<UserModel>().Count() > 0;
+					}
+				}
+				catch (Exception ex)
+				{
+					System.Diagnostics.Debug.WriteLine($"Database error: {ex.Message}");
+					return false;
+				}
+			});
+
+			// Use absolute navigation
+			if (userExists)
+			{
+				await Shell.Current.GoToAsync("//LoginPage");
+			}
+			else
+			{
+				await Shell.Current.GoToAsync("SetupPage");
+			}
 		}
-		else
+		catch (Exception ex)
 		{
+			System.Diagnostics.Debug.WriteLine($"Navigation error: {ex.Message}");
+			// Fallback navigation
 			await Shell.Current.GoToAsync("SetupPage");
 		}
-    }
+	}
 }
